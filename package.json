@@ -1,0 +1,17 @@
+{
+    "name": "gmaps-scraper-turbo",
+    "version": "1.0.0",
+    "description": "High performance Google Maps scraper using Playwright and Node.js",
+    "main": "scraper.js",
+    "type": "module",
+    "scripts": {
+        "start": "node scraper.js"
+    },
+    "dependencies": {
+        "@fastify/formbody": "^8.0.2",
+        "@fastify/static": "^9.0.0",
+        "exceljs": "^4.4.0",
+        "fastify": "^5.7.4",
+        "playwright": "^1.58.2"
+    }
+}
