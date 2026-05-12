@@ -7,11 +7,11 @@ import fs from 'fs';
 const fastify = Fastify({ logger: false });
 const PORT = 3000;
 
-// Konfigurasi Scraper
+// Configuration Scraper
 const CONCURRENCY_LIMIT = 5;
 const VIEWPORT = { width: 1366, height: 768 };
 
-// Helper: Ekstrak Email
+// Extract Email
 async function extractEmail(text) {
     if (!text) return null;
     const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
@@ -19,7 +19,7 @@ async function extractEmail(text) {
     return match ? match[0] : null;
 }
 
-// Scraper Logic (Diadaptasi dari kode asli Anda)
+// Scrape function
 async function scrapeBusinessDetails(browser, url, index) {
     const page = await browser.newPage();
     try {
@@ -64,7 +64,7 @@ async function scrapeBusinessDetails(browser, url, index) {
     }
 }
 
-// UI HTML
+// UI Section, use simple bootstrap lah...
 const htmlTemplate = `
 <!DOCTYPE html>
 <html>
@@ -147,9 +147,9 @@ fastify.post('/scrape', async (req, reply) => {
     const { query } = req.body;
     const maxResults = parseInt(20);
 
-    // Tambahkan user data dir agar tidak selalu dianggap "fresh/bot" (opsional)
+    // Add user data dir to avoid being bot
     const browser = await chromium.launch({
-        headless: true, // Set ke false jika ingin troubleshooting visual
+        headless: true, // Set to false if you want visual troubleshooting
         args: [
             '--disable-blink-features=AutomationControlled',
             '--no-sandbox'
@@ -159,7 +159,7 @@ fastify.post('/scrape', async (req, reply) => {
     const context = await browser.newContext({
         viewport: { width: 1280, height: 800 },
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        locale: 'en-US' // Paksa bahasa Inggris agar selector konsisten
+        locale: 'en-US' // Force English for consistent selectors
     });
 
     const page = await context.newPage();
